@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+    {{ super() }}
+    Factruas
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2>Subir archivos XML</h2>
+</div>
+<div class="container">
+    {{ wtf.quick_form(form, enctype='multipart/form-data') }}
+</div>
+
+{% endblock content %}
