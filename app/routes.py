@@ -11,14 +11,21 @@ import xlsxwriter as XLS
 import pandas as pd
 
 def muestra(file):
+    '''
+    Function to read only the required data from each xml file, only when the taxid 
+    is the correct 'IAU1411211Z5', for this company
+    '''
     tree = ET.parse(file)
     root = tree.getroot()
     try:
-        if root[1].attrib.get('Rfc') == 'IAU1411211Z5' :
+        if root[1].attrib.get('Rfc') == 'IAU1411211Z5' : #change this for other companies
             rfc_valido = 'Correcto'
         else:
             rfc_valido = 'ERROR EN RFC'
         data = {
+            '''
+            the data to be returned into a excel file
+            '''
             'RFC inamex': root[1].attrib.get('Rfc') + ' ' + rfc_valido,
             'Serie-Folio': str(root.attrib.get('Serie')) + '-' + str(root.attrib.get('Folio')),
             'Fecha y hora': root.attrib.get('Fecha'),
@@ -43,6 +50,9 @@ def muestra(file):
 
 @app.route('/', methods = ['GET', 'POST'])
 def home():
+    '''
+    Single page app, where files are uploaded and automaticaly download a excel file
+    '''
     form = UploadFiles()
     if form.validate_on_submit():
         datos = []
